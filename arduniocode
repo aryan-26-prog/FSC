@@ -1,0 +1,20 @@
+const int motorPin = 9; // PWM pin connected to motor driver
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(motorPin, OUTPUT);
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    char command = Serial.read();
+    
+    int speed = map(command - '0', 0, 5, 0, 255);
+    speed = constrain(speed, 0, 255);
+    
+    analogWrite(motorPin, speed);
+    
+    // Optional: Add delay to stabilize motor
+    delay(100);
+  }
+}
